@@ -18,11 +18,14 @@ let warningTimeout;
 
 //The day Costcodle was launched. Used to find game number each day
 const costcodleStartDate = new Date("09/21/2023");
-const gameNumber = getGameNumber();
+let gameNumber = getGameNumber();
+let originalInputHTML;
 
 //Elements with event listeners to play the game
-const input = document.getElementById("guess-input");
-const buttonInput = document.getElementById("guess-button");
+let input = document.getElementById("guess-input");
+let buttonInput = document.getElementById("guess-button");
+const newGameInput = document.getElementById("regen-button");
+newGameInput.addEventListener("click", newGameEventListener);
 
 const infoButton = document.getElementById("info-button");
 infoButton.addEventListener("click", switchState);
@@ -98,6 +101,7 @@ function initializeGame() {
   updateGameBoard();
 
   if (gameState.guesses.length < 6 && !gameState.hasWon) {
+    input.value = "";
     addEventListeners();
   } else {
     convertToShareButton();
@@ -106,6 +110,7 @@ function initializeGame() {
 
 function convertToShareButton() {
   const containerElem = document.getElementById("input-container");
+  originalInputHTML = containerElem.innerHTML;
   const shareButtonElem = document.createElement("button");
   shareButtonElem.setAttribute("id", "share-button");
   containerElem.innerHTML = "";
@@ -115,9 +120,22 @@ function convertToShareButton() {
   containerElem.appendChild(shareButtonElem);
 }
 
+function convertToInput() {
+  const containerElem = document.getElementById("input-container");
+
+  if (originalInputHTML) {
+    containerElem.innerHTML = originalInputHTML;
+  }
+  input = document.getElementById("guess-input");
+  buttonInput = document.getElementById("guess-button");
+  input.setAttribute("placeholder", "Enter a guess...");
+}
+
 function displayProductCard() {
   //First, update the image container with the new product image
   const imageContainer = document.getElementById("image-container");
+
+  imageContainer.innerHTML = "";
 
   //Create a new image element to dynamically store game image
   const productImageElement = document.createElement("img");
@@ -201,6 +219,26 @@ function handleInput() {
   }
 }
 
+//Button event listener to generate a new game
+function newGameEventListener() {
+  convertToInput();
+  gameState.guesses.forEach((guess, index) => clearGuess(index + 1));
+  const max = 3399;
+  const randomGameNum = Math.floor(Math.random() * max);
+  gameNumber = randomGameNum;
+  fetchGameData(randomGameNum);
+}
+
+function clearGuess(index) {
+  const guessContainer = document.getElementById(index);
+
+  guessContainer.innerHTML = "";
+  guessContainer.classList.remove(
+    "transparent-background",
+    "animate__flipOutX"
+  );
+}
+
 function copyStats() {
   let output = `Costcodle #${gameNumber}`;
   if (!gameState.hasWon) {
@@ -278,25 +316,34 @@ function copyStats() {
   }
 }
 
+function focusListener() {
+  input.setAttribute("placeholder", "0.00");
+}
+
+function blurListener() {
+  input.setAttribute("placeholder", "Enter a guess...");
+}
+
 function addEventListeners() {
+  input.disabled = false;
+  buttonInput.disabled = false;
+  buttonInput.classList.add("active");
   input.addEventListener("keydown", inputEventListener);
   buttonInput.addEventListener("click", buttonEventListener);
 
-  input.addEventListener("focus", () => {
-    input.setAttribute("placeholder", "0.00");
-  });
-  input.addEventListener("blur", () => {
-    input.setAttribute("placeholder", "Enter a guess...");
-  });
+  input.addEventListener("focus", focusListener);
+  input.addEventListener("blur", blurListener);
 }
 
 function removeEventListeners() {
-  buttonInput.setAttribute("disabled", "");
+  buttonInput.disabled = true;
   buttonInput.classList.remove("active");
-  input.setAttribute("disabled", "");
+  input.disabled = true;
   input.setAttribute("placeholder", "Game Over!");
   input.removeEventListener("keydown", inputEventListener);
   buttonInput.removeEventListener("click", buttonEventListener);
+  input.removeEventListener("focus", focusListener);
+  input.removeEventListener("blur", blurListener);
 }
 
 /*
@@ -473,7 +520,6 @@ function switchState(event) {
     }
 
     function graphDistribution() {
-      console.log("here");
       userStats.winsInNum.forEach((value, index) => {
         const graphElem = document.getElementById(`graph-${index + 1}`);
         if (userStats.numWins === 0) {
