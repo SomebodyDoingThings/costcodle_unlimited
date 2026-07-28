@@ -226,7 +226,9 @@ function newGameEventListener() {
   convertToInput();
   gameState.guesses.forEach((guess, index) => clearGuess(index + 1));
   const max = 3399;
-  if (onlyNumbers = true && customGameNumber <= max && customGameNumber > 0) {
+  if (customGameNumber == gameNumber) {
+    return
+  } else if (onlyNumbers = true && customGameNumber <= max && customGameNumber > 0) {
     gameNumber = customGameNumber;
   } else {
     const randomGameNum = Math.floor(Math.random() * max);
