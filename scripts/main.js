@@ -224,7 +224,6 @@ function newGameEventListener() {
   let customGameNumber = prompt("Game number (Leave blank for random) (Max: 3399)", gameNumber);
   let onlyNumbers = /\d/.test(customGameNumber);
   convertToInput();
-  gameState.guesses.forEach((guess, index) => clearGuess(index + 1));
   const max = 3399;
   if (customGameNumber == gameNumber) {
     return;
@@ -234,6 +233,7 @@ function newGameEventListener() {
     const randomGameNum = Math.floor(Math.random() * max);
     gameNumber = randomGameNum;
   }
+  gameState.guesses.forEach((guess, index) => clearGuess(index + 1));
   fetchGameData(gameNumber);
 }
 
