@@ -232,7 +232,7 @@ function newGameEventListener() {
     const randomGameNum = Math.floor(Math.random() * max);
     gameNumber = randomGameNum;
   }
-  fetchGameData(randomGameNum);
+  fetchGameData(gameNumber);
 }
 
 function clearGuess(index) {
