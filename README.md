@@ -1,4 +1,4 @@
-costcodle but with a random button and the ability to select past/present costcodles
+costcodle but with a random button and the ability to select past/future costcodles
 
 [go play it here i guess](https://somebodydoingthings.github.io/costcodle_unlimited/)
 
