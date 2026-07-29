@@ -236,11 +236,11 @@ function customGameEventListener() {
   let customGameNumber = prompt("Game number (1 to 3399)", gameNumber);
   let onlyNumbers = /\d/.test(customGameNumber);
   const max = 3399;
-  if (customGameNumber == gameNumber) {
+  if (customGameNumber == gameNumber || null) {
     return;
   } else if (onlyNumbers == true && customGameNumber <= max && customGameNumber > 0) {
     gameNumber = customGameNumber;
-  }
+  }
   convertToInput();
   gameState.guesses.forEach((guess, index) => clearGuess(index + 1));
   fetchGameData(gameNumber);
