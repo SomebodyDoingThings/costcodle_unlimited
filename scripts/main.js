@@ -227,9 +227,9 @@ function newGameEventListener() {
   const max = 3399;
   if (customGameNumber == gameNumber) {
     return;
-  } else if (onlyNumbers = true && customGameNumber <= max && customGameNumber > 0) {
+  } else if (onlyNumbers == true && customGameNumber <= max && customGameNumber > 0) {
     gameNumber = customGameNumber;
-  } else if (customGameNumber = 0) {
+  } else if (customGameNumber == 0) {
     const randomGameNum = Math.floor(Math.random() * max);
     gameNumber = randomGameNum;
   }
