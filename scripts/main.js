@@ -233,7 +233,7 @@ function randomGameEventListener() {
 
 //Button event listener to generate a new custom game
 function customGameEventListener() {
-  let customGameNumber = prompt("Game number (0 for random) (Max: 3399)", gameNumber);
+  let customGameNumber = prompt("Game number (1 to 3399)", gameNumber);
   let onlyNumbers = /\d/.test(customGameNumber);
   const max = 3399;
   if (customGameNumber == gameNumber) {
