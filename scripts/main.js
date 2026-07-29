@@ -221,7 +221,7 @@ function handleInput() {
 
 //Button event listener to generate a new game
 function newGameEventListener() {
-  let customGameNumber = prompt("Game number (Leave blank for random) (Max: 3399)", gameNumber);
+  let customGameNumber = prompt("Game number (0 for random) (Max: 3399)", gameNumber);
   let onlyNumbers = /\d/.test(customGameNumber);
   convertToInput();
   const max = 3399;
@@ -229,7 +229,7 @@ function newGameEventListener() {
     return;
   } else if (onlyNumbers = true && customGameNumber <= max && customGameNumber > 0) {
     gameNumber = customGameNumber;
-  } else if (customGameNumber = "") {
+  } else if (customGameNumber = 0) {
     const randomGameNum = Math.floor(Math.random() * max);
     gameNumber = randomGameNum;
   }
