@@ -24,10 +24,8 @@ let originalInputHTML;
 //Elements with event listeners to play the game
 let input = document.getElementById("guess-input");
 let buttonInput = document.getElementById("guess-button");
-const randomGameInput = document.getElementById("random-button");
-const customGameInput = document.getElementById("custom-button");
-randomGameInput.addEventListener("click", randomGameEventListener);
-customGameInput.addEventListener("click", customGameEventListener);
+const newGameInput = document.getElementById("regen-button");
+newGameInput.addEventListener("click", newGameEventListener);
 
 const infoButton = document.getElementById("info-button");
 infoButton.addEventListener("click", switchState);
@@ -221,18 +219,8 @@ function handleInput() {
   }
 }
 
-//Button event listener to generate a new random game
-function randomGameEventListener() {
-  const max = 3399;
-  const randomGameNum = Math.floor(Math.random() * max);
-  gameNumber = randomGameNum;
-  convertToInput();
-  gameState.guesses.forEach((guess, index) => clearGuess(index + 1));
-  fetchGameData(gameNumber);
-}
-
-//Button event listener to generate a new custom game
-function customGameEventListener() {
+//Button event listener to generate a new game
+function newGameEventListener() {
   let customGameNumber = prompt("Game number (0 for random) (Max: 3399)", gameNumber);
   let onlyNumbers = /\d/.test(customGameNumber);
   const max = 3399;
@@ -240,6 +228,9 @@ function customGameEventListener() {
     return;
   } else if (onlyNumbers == true && customGameNumber <= max && customGameNumber > 0) {
     gameNumber = customGameNumber;
+  } else if (customGameNumber == 0) {
+    const randomGameNum = Math.floor(Math.random() * max);
+    gameNumber = randomGameNum;
   }
   convertToInput();
   gameState.guesses.forEach((guess, index) => clearGuess(index + 1));
