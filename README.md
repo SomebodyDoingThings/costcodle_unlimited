@@ -1,6 +1,6 @@
 costcodle but with a random button and the ability to select past/future costcodles
 
-[go play it here i guess](https://costcodle-plus.github.io)
+[go play it here i guess](https://costcodle2.github.io)
 
 credit to:
 - [KermWasTaken](https://github.com/KermWasTaken) - original [costcodle](https://github.com/KermWasTaken/costcodle)
